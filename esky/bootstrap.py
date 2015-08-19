@@ -45,7 +45,12 @@ except NameError:
 try:
     ESKY_APPDATA_DIR
 except NameError:
-    ESKY_APPDATA_DIR = "appdata"
+    if sys.platform == "darwin":
+        # OSX 10.9.5 and newer require the appdata to be located inside the Resource folder.
+        # This change allows the application to be signed correctly with a V2 signature.
+        ESKY_APPDATA_DIR = "Contents/Resources/appdata"
+    else:
+        ESKY_APPDATA_DIR = "appdata"
 
 try:
     __esky_name__
